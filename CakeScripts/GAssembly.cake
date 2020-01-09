@@ -1,3 +1,5 @@
+#load Settings.cake
+
 using System;
 using P = System.IO.Path;
 using F = System.IO.File;

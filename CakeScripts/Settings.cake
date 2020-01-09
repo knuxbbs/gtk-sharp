@@ -1,3 +1,4 @@
+#load GAssembly.cake
 
 class Settings
 {
@@ -16,11 +17,6 @@ class Settings
             {
                 Deps = new[] { "GLibSharp" },
             },
-            new GAssembly("AtkSharp")
-            {
-                Deps = new[] { "GLibSharp" },
-                ExtraArgs = "--abi-cs-usings=Atk,GLib"
-            },
             new GAssembly("CairoSharp"),
             new GAssembly("PangoSharp")
             {
@@ -29,6 +25,11 @@ class Settings
             new GAssembly("GdkSharp")
             {
                 Deps = new[] { "GLibSharp", "GioSharp", "CairoSharp", "PangoSharp" }
+            },
+            new GAssembly("AtkSharp")
+            {
+                Deps = new[] { "GLibSharp" },
+                ExtraArgs = "--abi-cs-usings=Atk,GLib"
             },
             new GAssembly("GtkSharp")
             {
