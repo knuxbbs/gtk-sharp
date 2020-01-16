@@ -1,7 +1,7 @@
 #load CakeScripts\GAssembly.cs
 #load CakeScripts\Settings.cs
-#addin "Cake.FileHelpers&version=3.2.0"
-#addin "Cake.Incubator&version=5.0.1"
+#addin "Cake.FileHelpers"
+#addin "Cake.Incubator"
 
 // VARS
 
@@ -110,7 +110,6 @@ Task("PackageNuGet")
         Configuration = configuration,
         OutputDirectory = "BuildOutput/NugetPackages",
         NoBuild = true,
-
     };
 
     foreach(var gassembly in list)
