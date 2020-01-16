@@ -34,14 +34,16 @@ public class GAssembly
     public void Prepare()
     {
         Cake.CreateDirectory(GDir);
-        var tempapi = Path.Combine(GDir, Name + "-api.xml");
-        Cake.CopyFile(RawApi, tempapi);
 
         // Metadata file found, time to generate some stuff!!!
         if (Cake.FileExists(Metadata))
         {
             // Fixup API file
+            var tempapi = Path.Combine(GDir, Name + "-api.xml");
             var symfile = Path.Combine(Dir, Name + "-symbols.xml");
+
+            Cake.CopyFile(RawApi, tempapi);
+
             Cake.DotNetCoreExecute("BuildOutput/Tools/GapiFixup.dll",
                 "--metadata=" + Metadata + " " + "--api=" + tempapi +
                 (Cake.FileExists(symfile) ? " --symbols=" + symfile : string.Empty)
