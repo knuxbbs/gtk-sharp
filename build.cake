@@ -1,5 +1,5 @@
-#load CakeScripts\GAssembly.cake
-#load CakeScripts\Settings.cake
+#load CakeScripts\GAssembly.cs
+#load CakeScripts\Settings.cs
 #addin "Cake.FileHelpers&version=3.2.0"
 #addin "Cake.Incubator&version=5.0.1"
 

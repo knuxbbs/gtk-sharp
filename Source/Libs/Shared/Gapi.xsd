@@ -22,7 +22,7 @@
     </xs:annotation>
 
     <!-- Top-level tag-->
-	<xs:element name="api">
+    <xs:element name="api">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="namespace" type="namespaceType" maxOccurs="unbounded"/>
@@ -208,7 +208,7 @@
         <xs:attribute name="shared" type="xs:boolean" use="optional"/>
     </xs:complexType>
 
-	<xs:complexType name="fieldType">
+    <xs:complexType name="fieldType">
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="cname" type="xs:string"/>
         <xs:attribute name="type" type="xs:string"/>
@@ -231,7 +231,7 @@
         </xs:sequence>
     </xs:complexType>
 
-   <xs:complexType name="methodType">
+    <xs:complexType name="methodType">
         <xs:sequence>
             <xs:element name="return-type" type="return-typeType"/>
             <xs:element name="parameters" minOccurs="0">
