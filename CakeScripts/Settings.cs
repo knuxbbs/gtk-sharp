@@ -1,4 +1,3 @@
-
 class Settings
 {
     public static ICakeContext Cake { get; set; }

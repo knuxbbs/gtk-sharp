@@ -1,0 +1,3 @@
+[submodule ".\\Source\\Tools\\gapi"]
+	path = .\\Source\\Tools\\gapi
+	url = https://github.com/knuxbbs/gapi

@@ -36,8 +36,8 @@ Task("Prepare")
     .Does(() =>
 {
     // Build tools
-    DotNetCoreRestore("Source/Tools/Tools.sln");
-    DotNetCoreBuild("Source/Tools/Tools.sln", new DotNetCoreBuildSettings {
+    DotNetCoreRestore("Source/Tools/gapi/Gapi.sln");
+    DotNetCoreBuild("Source/Tools/gapi/Gapi.sln", new DotNetCoreBuildSettings {
         Verbosity = DotNetCoreVerbosity.Minimal,
         Configuration = configuration
     });

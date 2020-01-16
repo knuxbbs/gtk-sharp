@@ -1,6 +1,6 @@
 using System;
-using P = System.IO.Path;
-using F = System.IO.File;
+// using P = System.IO.Path;
+// using F = System.IO.File;
 
 public class GAssembly
 {
