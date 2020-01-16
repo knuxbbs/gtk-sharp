@@ -39,7 +39,8 @@ Task("Prepare")
     DotNetCoreRestore("Source/Tools/gapi/Gapi.sln");
     DotNetCoreBuild("Source/Tools/gapi/Gapi.sln", new DotNetCoreBuildSettings {
         Verbosity = DotNetCoreVerbosity.Minimal,
-        Configuration = configuration
+        Configuration = configuration,
+        OutputDirectory = "BuildOutput/Tools"
     });
 
     // Generate code and prepare libs projects

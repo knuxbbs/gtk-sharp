@@ -1,5 +1,3 @@
-#load Settings.cake
-
 using System;
 using System.IO;
 

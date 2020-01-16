@@ -1,5 +1,3 @@
-#load GAssembly.cake
-
 class Settings
 {
     public static ICakeContext Cake { get; set; }
