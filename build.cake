@@ -31,6 +31,21 @@ Task("Init")
             list.Add(gassembly);
 });
 
+Task("Clean")
+    .IsDependentOn("Init")
+    .Does(() =>
+{
+    foreach(var gassembly in list)
+        gassembly.Clean();
+});
+
+Task("FullClean")
+    .IsDependentOn("Clean")
+    .Does(() =>
+{
+    DeleteDirectory("BuildOutput", true);
+});
+
 Task("Prepare")
     .IsDependentOn("Clean")
     .Does(() =>
@@ -45,25 +60,11 @@ Task("Prepare")
     // Generate code and prepare libs projects
     foreach(var gassembly in list)
         gassembly.Prepare();
+        
     DotNetCoreRestore("Source/GtkSharp.sln");
 
     // Addin
     DotNetCoreRestore("Source/Addins/MonoDevelop.GtkSharp.Addin/MonoDevelop.GtkSharp.Addin.sln");
-});
-
-Task("Clean")
-    .IsDependentOn("Init")
-    .Does(() =>
-{
-    foreach(var gassembly in list)
-        gassembly.Clean();
-});
-
-Task("FullClean")
-    .IsDependentOn("Clean")
-    .Does(() =>
-{
-    DeleteDirectory("BuildOutput", true);
 });
 
 Task("Build")
