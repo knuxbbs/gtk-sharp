@@ -1,7 +1,7 @@
-#load CakeScripts\GAssembly.cake
-#load CakeScripts\Settings.cake
-#addin "Cake.FileHelpers&version=3.2.0"
-#addin "Cake.Incubator&version=5.0.1"
+#load CakeScripts\GAssembly.cs
+#load CakeScripts\Settings.cs
+#addin "Cake.FileHelpers"
+#addin "Cake.Incubator"
 
 // VARS
 
@@ -51,10 +51,11 @@ Task("Prepare")
     .Does(() =>
 {
     // Build tools
-    DotNetCoreRestore("Source/Tools/Tools.sln");
-    DotNetCoreBuild("Source/Tools/Tools.sln", new DotNetCoreBuildSettings {
+    DotNetCoreRestore("Source/Tools/gapi/Gapi.sln");
+    DotNetCoreBuild("Source/Tools/gapi/Gapi.sln", new DotNetCoreBuildSettings {
         Verbosity = DotNetCoreVerbosity.Minimal,
-        Configuration = configuration
+        Configuration = configuration,
+        OutputDirectory = "BuildOutput/Tools"
     });
 
     // Generate code and prepare libs projects
@@ -110,7 +111,6 @@ Task("PackageNuGet")
         Configuration = configuration,
         OutputDirectory = "BuildOutput/NugetPackages",
         NoBuild = true,
-
     };
 
     foreach(var gassembly in list)

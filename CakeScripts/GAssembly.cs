@@ -1,8 +1,5 @@
-#load Settings.cake
-
 using System;
-using P = System.IO.Path;
-using F = System.IO.File;
+using System.IO;
 
 public class GAssembly
 {
@@ -25,10 +22,10 @@ public class GAssembly
         Deps = new string[0];
 
         Name = name;
-        Dir = P.Combine("Source", "Libs", name);
-        GDir = P.Combine(Dir, "Generated");
+        Dir = Path.Combine("Source", "Libs", name);
+        GDir = Path.Combine(Dir, "Generated");
 
-        var temppath = P.Combine(Dir, name);
+        var temppath = Path.Combine(Dir, name);
         Csproj = temppath + ".csproj";
         RawApi = temppath + "-api.xml";
         Metadata = temppath + ".metadata";
@@ -37,32 +34,34 @@ public class GAssembly
     public void Prepare()
     {
         Cake.CreateDirectory(GDir);
-        var tempapi = P.Combine(GDir, Name + "-api.xml");
-        Cake.CopyFile(RawApi, tempapi);
 
         // Metadata file found, time to generate some stuff!!!
         if (Cake.FileExists(Metadata))
         {
             // Fixup API file
-            var symfile = P.Combine(Dir, Name + "-symbols.xml");
-            Cake.DotNetCoreExecute("BuildOutput/Tools/GapiFixup.dll", 
-                "--metadata=" + Metadata + " " + "--api=" + tempapi + 
+            var tempapi = Path.Combine(GDir, Name + "-api.xml");
+            var symfile = Path.Combine(Dir, Name + "-symbols.xml");
+
+            Cake.CopyFile(RawApi, tempapi);
+
+            Cake.DotNetCoreExecute("BuildOutput/Tools/GapiFixup.dll",
+                "--metadata=" + Metadata + " " + "--api=" + tempapi +
                 (Cake.FileExists(symfile) ? " --symbols=" + symfile : string.Empty)
             );
 
             var extraargs = ExtraArgs + " ";
 
             // Locate APIs to include
-            foreach(var dep in Deps)
+            foreach (var dep in Deps)
             {
-                var ipath = P.Combine("Source", "Libs", dep, "Generated", dep + "-api.xml");
+                var ipath = Path.Combine("Source", "Libs", dep, "Generated", dep + "-api.xml");
 
                 if (Cake.FileExists(ipath))
                     extraargs += " --include=" + ipath + " ";
             }
 
             // Generate code
-            Cake.DotNetCoreExecute("BuildOutput/Tools/GapiCodegen.dll", 
+            Cake.DotNetCoreExecute("BuildOutput/Tools/GapiCodegen.dll",
                 "--outdir=" + GDir + " " +
                 "--schema=Source/Libs/Shared/Gapi.xsd " +
                 extraargs + " " +
