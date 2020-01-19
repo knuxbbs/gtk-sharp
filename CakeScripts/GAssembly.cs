@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using P = System.IO.Path;
 
 public class GAssembly
 {
@@ -22,10 +22,10 @@ public class GAssembly
         Deps = new string[0];
 
         Name = name;
-        Dir = Path.Combine("Source", "Libs", name);
-        GDir = Path.Combine(Dir, "Generated");
+        Dir = P.Combine("Source", "Libs", name);
+        GDir = P.Combine(Dir, "Generated");
 
-        var temppath = Path.Combine(Dir, name);
+        var temppath = P.Combine(Dir, name);
         Csproj = temppath + ".csproj";
         RawApi = temppath + "-api.xml";
         Metadata = temppath + ".metadata";
@@ -39,8 +39,8 @@ public class GAssembly
         if (Cake.FileExists(Metadata))
         {
             // Fixup API file
-            var tempapi = Path.Combine(GDir, Name + "-api.xml");
-            var symfile = Path.Combine(Dir, Name + "-symbols.xml");
+            var tempapi = P.Combine(GDir, Name + "-api.xml");
+            var symfile = P.Combine(Dir, Name + "-symbols.xml");
 
             Cake.CopyFile(RawApi, tempapi);
 
@@ -54,7 +54,7 @@ public class GAssembly
             // Locate APIs to include
             foreach (var dep in Deps)
             {
-                var ipath = Path.Combine("Source", "Libs", dep, "Generated", dep + "-api.xml");
+                var ipath = P.Combine("Source", "Libs", dep, "Generated", dep + "-api.xml");
 
                 if (Cake.FileExists(ipath))
                     extraargs += " --include=" + ipath + " ";

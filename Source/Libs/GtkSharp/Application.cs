@@ -18,15 +18,13 @@
 // Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 // Boston, MA 02111-1307, USA.
 
-namespace Gtk {
+namespace Gtk
+{
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Threading;
 
-	using System;
-	using System.Reflection;
-	using System.Runtime.InteropServices;
-	using System.Threading;
-	using Gdk;
-
-	public partial class Application {
+    public partial class Application {
 
 		const int WS_EX_TOOLWINDOW = 0x00000080;
 		const int WS_OVERLAPPEDWINDOW = 0x00CF0000;

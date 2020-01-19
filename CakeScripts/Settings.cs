@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 class Settings
 {
     public static ICakeContext Cake { get; set; }
