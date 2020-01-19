@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\..\BuildOutput\Samples</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="**\*.glade" />
+    <EmbeddedResource Include="**\*.glade">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sections\**\*.cs" Visible="false">
+      <LogicalName>GtkSharp.Samples.%(Filename).cs</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libs\AtkSharp\AtkSharp.csproj" />
+    <ProjectReference Include="..\Libs\CairoSharp\CairoSharp.csproj" />
+    <ProjectReference Include="..\Libs\GdkSharp\GdkSharp.csproj" />
+    <ProjectReference Include="..\Libs\GioSharp\GioSharp.csproj" />
+    <ProjectReference Include="..\Libs\GLibSharp\GLibSharp.csproj" />
+    <ProjectReference Include="..\Libs\GtkSharp\GtkSharp.csproj" />
+    <ProjectReference Include="..\Libs\PangoSharp\PangoSharp.csproj" />
+  </ItemGroup>
+</Project>
