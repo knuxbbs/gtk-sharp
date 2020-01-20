@@ -1,4 +1,3 @@
-
 enum Library
 {
     GLib,

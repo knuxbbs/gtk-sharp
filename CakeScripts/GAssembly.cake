@@ -1,3 +1,5 @@
+#load Settings.cake
+
 using System;
 using P = System.IO.Path;
 
@@ -26,9 +28,9 @@ public class GAssembly
         GDir = P.Combine(Dir, "Generated");
 
         var temppath = P.Combine(Dir, name);
-        Csproj = temppath + ".csproj";
-        RawApi = temppath + "-api.xml";
-        Metadata = temppath + ".metadata";
+        Csproj = $"{temppath}.csproj";
+        RawApi = $"{temppath}-api.xml";
+        Metadata = $"{temppath}.metadata";
     }
 
     public void Prepare()
@@ -39,34 +41,29 @@ public class GAssembly
         if (Cake.FileExists(Metadata))
         {
             // Fixup API file
-            var tempapi = P.Combine(GDir, Name + "-api.xml");
-            var symfile = P.Combine(Dir, Name + "-symbols.xml");
+            var tempapi = P.Combine(GDir, $"{Name}-api.xml");
+            var symfile = P.Combine(Dir, $"{Name}-symbols.xml");
 
             Cake.CopyFile(RawApi, tempapi);
 
             Cake.DotNetCoreExecute("BuildOutput/Tools/GapiFixup.dll",
-                "--metadata=" + Metadata + " " + "--api=" + tempapi +
-                (Cake.FileExists(symfile) ? " --symbols=" + symfile : string.Empty)
+                $"--metadata={Metadata} --api={tempapi}{(Cake.FileExists(symfile) ? $" --symbols={symfile}" : string.Empty)}"
             );
 
-            var extraargs = ExtraArgs + " ";
+            var extraargs = $"{ExtraArgs} ";
 
             // Locate APIs to include
             foreach (var dep in Deps)
             {
-                var ipath = P.Combine("Source", "Libs", dep, "Generated", dep + "-api.xml");
+                var ipath = P.Combine("Source", "Libs", dep, "Generated", $"{dep}-api.xml");
 
                 if (Cake.FileExists(ipath))
-                    extraargs += " --include=" + ipath + " ";
+                    extraargs += $" --include={ipath} ";
             }
 
             // Generate code
             Cake.DotNetCoreExecute("BuildOutput/Tools/GapiCodegen.dll",
-                "--outdir=" + GDir + " " +
-                "--schema=Source/Libs/Shared/Gapi.xsd " +
-                extraargs + " " +
-                "--assembly-name=" + Name + " " +
-                "--generate=" + tempapi
+                $"--outdir={GDir} --schema=BuildOutput/Tools/Gapi.xsd {extraargs} --assembly-name={Name} --generate={tempapi}"
             );
         }
 

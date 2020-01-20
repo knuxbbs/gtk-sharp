@@ -1,3 +1,5 @@
+#load GAssembly.cake
+
 using System.Collections.Generic;
 
 class Settings
