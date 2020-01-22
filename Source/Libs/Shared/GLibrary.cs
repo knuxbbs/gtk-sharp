@@ -31,8 +31,7 @@ class GLibrary
 
     public static IntPtr Load(Library library)
     {
-        var ret = IntPtr.Zero;
-        if (_libraries.TryGetValue(library, out ret))
+        if (_libraries.TryGetValue(library, out var ret))
             return ret;
 
         if (FuncLoader.IsWindows)

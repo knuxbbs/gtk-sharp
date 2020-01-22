@@ -79,7 +79,7 @@ class FuncLoader
 
     public static IntPtr GetProcAddress(IntPtr library, string function)
     {
-        var ret = IntPtr.Zero;
+        IntPtr ret;
 
         if (IsWindows)
             ret = Windows.GetProcAddress(library, function);
@@ -94,7 +94,7 @@ class FuncLoader
     public static T LoadFunction<T>(IntPtr procaddress)
     {
         if (procaddress == IntPtr.Zero)
-            return default(T);
+            return default;
 
         return Marshal.GetDelegateForFunctionPointer<T>(procaddress);
     }
